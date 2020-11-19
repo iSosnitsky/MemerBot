@@ -3,9 +3,12 @@ const fs = require('fs');
 const { Client } = require('discord.js');
 const discordClient = new Client();
 const commandsMap = new Map();
-const commandCooldown = {};
+// const commandCooldown = {};
 
-const config = process.env;
+process.env.TOKEN = "placeholder";
+process.env.PREFIX = "!";
+
+const config = process.env
 
 discordClient.config = config;
 discordClient.commands = commandsMap;
@@ -22,7 +25,7 @@ fs.readdirSync(path.resolve(__dirname, 'commands'))
       else if (!command.help || !command.help.name) {
         throw 'Command is missing a valid help object!';
       }
-      commandCooldown[command.help.name] = new Set();
+      // commandCooldown[command.help.name] = new Set();
       commandsMap.set(command.help.name, command);
     }
     catch (error) {
@@ -55,11 +58,13 @@ discordClient.on('message', message => {
   let rawArgs = raw.slice(1);
   let userId = message.author.id;
 
-  if (commandCooldown[label].has(userId)) return message.channel.send(`This command has a cooldown of ${commandsMap.get(label).help.cooldown} seconds. Please wait a bit and try again!`).then(msg => msg.delete({ timeout: 6000 }));
-  commandCooldown[label].add(userId);
-  setTimeout(() => {
-    commandCooldown[label].delete(userId)
-  }, commandsMap.get(label).help.cooldown * 1000);
+  // if (commandCooldown[label].has(userId)) return message.channel
+  //   .send(`This command has a cooldown of ${commandsMap.get(label).help.cooldown} seconds. Please wait a bit and try again!`)
+  //   .then(msg => msg.delete({ timeout: 6000 }));
+  // commandCooldown[label].add(userId);
+  // setTimeout(() => {
+  //   commandCooldown[label].delete(userId)
+  // }, commandsMap.get(label).help.cooldown * 1000);
 
   if (commandsMap.get(label)) {
     commandsMap.get(label).run(discordClient, message, args, rawArgs);
