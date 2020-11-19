@@ -47,7 +47,7 @@ exports.run = async (bot, msg, args, rawArgs) => {
   const instanceId = uuidv4();
   const dirPath = path.resolve(process.cwd(), 'tmp', instanceId);
 
-  if (sizeInMb > 4) return msg.channel.send(`Error: File size is larger than 4MB, i don't wanna suffer`);
+  if (sizeInMb > process.env.SIZE_LIMIT_MB) return msg.channel.send(`Error: File size is larger than ${process.env.SIZE_LIMIT_MB}MB, i don't wanna suffer`);
 
   const feedbackMsg = msg.channel.send(`Processing... This might take a while!`);
 

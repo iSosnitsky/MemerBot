@@ -7,6 +7,7 @@ const commandsMap = new Map();
 
 process.env.TOKEN = "placeholder";
 process.env.PREFIX = "!";
+process.env.SIZE_LIMIT_MB = 8
 
 const config = process.env
 
